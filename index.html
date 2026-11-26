@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bhavy Poladia · Game Developer</title>
+<meta name="description" content="Bhavy Harshal Poladia, Lead Game Developer (Unity / C#). Gameplay, tools and console development. Currently leading SURI: The Seventh Note for PS5 and PC.">
+<meta property="og:title" content="Bhavy Poladia · Lead Game Developer">
+<meta property="og:description" content="Unity / C# gameplay, tools and console development. Leading SURI: The Seventh Note for PS5 and PC.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one centered column; a "track lane" rule down the left of the timeline echoes a rhythm-game note highway. */
+:root {
+  --bg: #f6f4ef;
+  --surface: #ffffff;
+  --ink: #1a1c2b;
+  --muted: #5b5e73;
+  --line: #dcd8cd;
+  --accent: #d9481e;      /* warm vermilion-orange: the "hit" note */
+  --accent-2: #2f4cc9;    /* cobalt: the second lane */
+  --accent-ink: #ffffff;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --radius: 10px;
+  --max: 1080px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11131f; --surface: #191c2c; --ink: #eceaf4; --muted: #a2a4ba; --line: #2b2f45;
+    --accent: #ff7a45; --accent-2: #7d93ff; --accent-ink: #11131f; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11131f; --surface: #191c2c; --ink: #eceaf4; --muted: #a2a4ba; --line: #2b2f45;
+  --accent: #ff7a45; --accent-2: #7d93ff; --accent-ink: #11131f; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 17px/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+.wrap {
+  max-width: var(--max); margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; text-wrap: balance; }
+.eyebrow {
+  font: 600 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
+}
+:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; border-radius: 4px; }
+
+/* Nav */
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 11; background: var(--bg); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.brand { font: 700 18px/1 var(--display); text-decoration: none; }
+.brand span { color: var(--accent); }
+.nav-links { display: flex; gap: 22px; flex-wrap: wrap; }
+.nav-links a { text-decoration: none; color: var(--muted); font-size: 15px; }
+.nav-links a:hover { color: var(--ink); }
+@media (max-width: 640px) { .nav-links { display: none; } }
+
+/* Hero */
+.hero { padding-block: 88px 64px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(44px, 7vw, 84px); font-weight: 800; letter-spacing: -.02em; margin-top: 18px; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p.lead { font-size: 20px; color: var(--muted); max-width: 34ch; margin: 22px 0 30px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px;
+  font: 600 15px/1 var(--body); text-decoration: none; border: 1.5px solid var(--ink); transition: transform .15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+/* Note highway: a small rhythm-lane graphic */
+.highway {
+  position: relative; aspect-ratio: 4 / 5; max-width: 100%; border-radius: 18px; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--line);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+}
+.lane { position: relative; border-right: 1px dashed var(--line); }
+.lane:last-child { border-right: 0; }
+.note {
+  position: absolute; left: 18%; width: 64%; height: 18px; border-radius: 6px; background: var(--accent-2);
+  animation: fall 2.4s linear infinite; opacity: .9;
+}
+.lane:nth-child(2) .note, .lane:nth-child(4) .note { background: var(--accent); }
+.hitline { position: absolute; left: 0; right: 0; bottom: 16%; height: 3px; background: var(--ink); opacity: .85; }
+.hit-label { position: absolute; right: 12px; bottom: calc(16% + 10px); font: 600 11px/1 var(--mono); color: var(--muted); letter-spacing: .1em; }
+@keyframes fall { from { top: -10%; } to { top: 110%; } }
+@media (prefers-reduced-motion: reduce) { .note { animation: none; } html { scroll-behavior: auto; } }
+@media (max-width: 820px) { .hero { grid-template-columns: 1fr; padding-block: 56px 40px; } .highway { aspect-ratio: 16 / 7; } }
+
+/* Stats strip */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
+.stat { padding: 22px 8px; border-right: 1px solid var(--line); }
+.stat:last-child { border-right: 0; }
+.stat b { display: block; font: 800 34px/1 var(--display); font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: 14px; }
+@media (max-width: 640px) { .stats { grid-template-columns: repeat(2, 1fr); } .stat:nth-child(2) { border-right: 0; } .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); } }
+
+section { padding-block: 72px; }
+section > .wrap > h2 { font-size: clamp(30px, 4vw, 44px); margin: 10px 0 32px; }
+
+/* Featured: SURI */
+.feature {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px; border-radius: 18px;
+  background: var(--ink); color: var(--bg);
+}
+.feature .eyebrow { color: var(--accent); }
+.feature h3 { font-size: clamp(30px, 4vw, 46px); margin: 12px 0 14px; }
+.feature p { color: color-mix(in srgb, var(--bg) 78%, var(--ink)); margin: 0 0 12px; }
+.feature ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; align-content: start; }
+.feature li { padding-left: 22px; position: relative; color: color-mix(in srgb, var(--bg) 85%, var(--ink)); }
+.feature li::before { content: ""; position: absolute; left: 0; top: .55em; width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.tag { font: 500 12px/1 var(--mono); padding: 7px 10px; border-radius: 999px; border: 1px solid currentColor; opacity: .85; }
+@media (max-width: 820px) { .feature { grid-template-columns: 1fr; padding: 28px; } }
+
+/* Experience timeline */
+.timeline { position: relative; display: grid; gap: 36px; padding-left: 34px; }
+.timeline::before { content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: repeating-linear-gradient(to bottom, var(--line) 0 8px, transparent 8px 14px); }
+.job { position: relative; display: grid; grid-template-columns: 200px 1fr; gap: 24px; }
+.job::before { content: ""; position: absolute; left: -32px; top: 6px; width: 14px; height: 14px; border-radius: 4px; background: var(--accent-2); }
+.job:first-child::before { background: var(--accent); }
+.when { font: 500 13px/1.5 var(--mono); color: var(--muted); }
+.job h3 { font-size: 22px; }
+.job .org { color: var(--muted); margin: 4px 0 10px; }
+.job ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+@media (max-width: 720px) { .job { grid-template-columns: 1fr; gap: 6px; } }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.skill { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; min-width: 0; }
+.skill h3 { font-size: 18px; margin-bottom: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 13px/1 var(--mono); padding: 8px 10px; border-radius: 6px; background: color-mix(in srgb, var(--accent-2) 12%, transparent); }
+.chip.dim { background: transparent; border: 1px dashed var(--line); color: var(--muted); }
+@media (max-width: 820px) { .skills { grid-template-columns: 1fr; } }
+
+/* Projects */
+.projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.project {
+  display: block; text-decoration: none; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 26px; transition: border-color .15s ease, transform .15s ease;
+}
+.project:hover { border-color: var(--accent); transform: translateY(-2px); }
+.project .eyebrow { color: var(--accent-2); }
+.project h3 { font-size: 24px; margin: 10px 0 8px; }
+.project p { color: var(--muted); margin: 0; }
+.project .go { display: inline-block; margin-top: 14px; font: 600 14px/1 var(--mono); color: var(--accent); }
+.jam-list { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 720px) { .projects { grid-template-columns: 1fr; } }
+
+/* Education + interests */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.edu { display: grid; gap: 18px; }
+.edu div b { display: block; font-family: var(--display); font-size: 19px; }
+.edu div span { color: var(--muted); }
+.interests { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+@media (max-width: 720px) { .two { grid-template-columns: 1fr; } }
+
+/* Contact */
+.contact { text-align: left; padding: 48px; border-radius: 18px; background: var(--accent); color: var(--accent-ink); }
+.contact h2 { font-size: clamp(32px, 5vw, 56px); margin: 0 0 14px; }
+.contact p { max-width: 46ch; margin: 0 0 24px; font-size: 18px; }
+.contact .btn { border-color: var(--accent-ink); }
+.contact .btn.primary { background: var(--accent-ink); color: var(--accent); border-color: var(--accent-ink); }
+.copy-note { font: 500 13px/1 var(--mono); margin-left: 6px; }
+@media (max-width: 640px) { .contact { padding: 28px; } }
+
+footer { padding-block: 40px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">bhavy<span>.</span>dev</a>
+    <div class="nav-links">
+      <a href="#suri">Now</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top" class="wrap hero">
+  <div>
+    <span class="eyebrow">Lead Game Developer · Bangalore, India</span>
+    <h1>Bhavy Harshal Poladia builds games that <em>feel right</em> on the beat.</h1>
+    <p class="lead">Unity and C# developer with 6+ years across gameplay, tools and console. Currently leading a rhythm platformer for PS5 and PC.</p>
+    <div class="ctas">
+      <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">Download resume</a>
+      <a class="btn" href="#contact">Get in touch</a>
+      <a class="btn" href="https://github.com/thenerdpoint60" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+  <div class="highway" aria-hidden="true">
+    <div class="lane"><span class="note" style="animation-delay:-0.2s"></span><span class="note" style="animation-delay:-1.4s"></span></div>
+    <div class="lane"><span class="note" style="animation-delay:-0.8s"></span></div>
+    <div class="lane"><span class="note" style="animation-delay:-1.9s"></span><span class="note" style="animation-delay:-0.5s"></span></div>
+    <div class="lane"><span class="note" style="animation-delay:-1.1s"></span></div>
+    <div class="hitline"></div>
+    <span class="hit-label">PERFECT</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><b>6+</b><span>years in Unity / C#</span></div>
+    <div class="stat"><b>PS5</b><span>console title in development</span></div>
+    <div class="stat"><b>15</b><span>game-jam games on itch.io</span></div>
+    <div class="stat"><b>5</b><span>studios worked at</span></div>
+  </div>
+</div>
+
+<section id="suri">
+  <div class="wrap">
+    <span class="eyebrow">What I'm working on now</span>
+    <h2>Leading SURI: The Seventh Note</h2>
+    <div class="feature">
+      <div>
+        <span class="eyebrow">Tathvamasi Studio · Oct 2024 – present</span>
+        <h3>A nonlinear rhythm-based platformer</h3>
+        <p>SURI is being developed for PS5 and Windows as part of Sony's PlayStation India Hero Project. I lead its development and own the systems that make movement and music line up.</p>
+        <div class="tags">
+          <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">PS5</span><span class="tag">FMOD Studio</span><span class="tag">Editor tooling</span>
+        </div>
+      </div>
+      <ul>
+        <li>Core gameplay systems built around game feel and player experience.</li>
+        <li>FMOD and other third-party SDKs integrated into Unity behind a reusable architecture.</li>
+        <li>Custom Unity editor tools that speed up work for designers and artists.</li>
+        <li>PS5 development with PlayStation SDK tools and dev kits.</li>
+        <li>Technical point of contact across design, art and audio.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <span class="eyebrow">Experience</span>
+    <h2>Where I've built games and simulations</h2>
+    <div class="timeline">
+      <article class="job">
+        <div class="when">Oct 2024 – Present<br>Bangalore</div>
+        <div>
+          <h3>Lead Game Developer</h3>
+          <div class="org">Tathvamasi Studio</div>
+          <ul>
+            <li>Leading SURI: The Seventh Note for PS5 and Windows (PlayStation India Hero Project).</li>
+            <li>Gameplay systems, FMOD integration, and editor tools for the whole team.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="job">
+        <div class="when">Feb 2023 – Oct 2024<br>Mumbai</div>
+        <div>
+          <h3>Software Engineer</h3>
+          <div class="org">AjnaLens</div>
+          <ul>
+            <li>Unity mission planner (with Unity Splines) for designing simulated aerial training scenarios.</li>
+            <li>Companion training simulator with live firearm hardware integration.</li>
+            <li>360° video capture streamed to multiple Unity clients over the local network, with low latency via GStreamer.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="job">
+        <div class="when">Sep 2020 – Feb 2023<br>Hyderabad</div>
+        <div>
+          <h3>Unity Game Programmer</h3>
+          <div class="org">Gameshastra</div>
+          <ul>
+            <li>Led the team on a match-3 fitness game released on the App Store and Google Play.</li>
+            <li>Gameplay and performance work on Spin and Roll, live on the App Store and Google Play.</li>
+            <li>Features for Song Beat, plus core systems for a song-based trivia game and a visual storytelling game.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="job">
+        <div class="when">Mar 2020 – Jul 2020<br>Mumbai</div>
+        <div>
+          <h3>Unity Developer</h3>
+          <div class="org">Liminal Studio</div>
+          <ul>
+            <li>AR product browsing with AR Foundation, ARCore mini-games, and a virtual production app.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="job">
+        <div class="when">Jul 2019 – Oct 2019<br>Mumbai</div>
+        <div>
+          <h3>Unity Developer &amp; C# Programmer</h3>
+          <div class="org">Summit Games</div>
+          <ul>
+            <li>Ported a 3D shooter to VR on HTC Vive, and built an AR food-ordering app with ARCore.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <span class="eyebrow">Toolkit</span>
+    <h2>What I work with</h2>
+    <div class="skills">
+      <div class="skill">
+        <h3>Engines &amp; languages</h3>
+        <div class="chips">
+          <span class="chip">Unity</span><span class="chip">C#</span><span class="chip">Python</span>
+          <span class="chip dim">C++ (basic)</span><span class="chip dim">Unreal Engine 4 (basic)</span>
+        </div>
+      </div>
+      <div class="skill">
+        <h3>Platforms</h3>
+        <div class="chips">
+          <span class="chip">PlayStation 5</span><span class="chip">Windows PC</span><span class="chip">Android</span><span class="chip">iOS</span>
+          <span class="chip">ARCore / AR Foundation</span><span class="chip">HTC Vive / SteamVR</span>
+        </div>
+      </div>
+      <div class="skill">
+        <h3>Systems &amp; tools</h3>
+        <div class="chips">
+          <span class="chip">Gameplay systems</span><span class="chip">Unity Editor tools</span><span class="chip">FMOD Studio</span>
+          <span class="chip">Unity Profiler</span><span class="chip">GStreamer</span><span class="chip">Git</span><span class="chip">Xcode</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <span class="eyebrow">Outside work</span>
+    <h2>Jams, side projects and teaching</h2>
+    <div class="projects">
+      <a class="project" href="https://nerdpoint.itch.io/" target="_blank" rel="noopener">
+        <span class="eyebrow">itch.io</span>
+        <h3>15 game-jam games</h3>
+        <p>Strategy, puzzle, platformer and horror games built in jam weekends, most playable in the browser.</p>
+        <span class="go">Play on itch.io →</span>
+      </a>
+      <a class="project" href="https://play.google.com/store/apps/dev?id=6326533619120762311" target="_blank" rel="noopener">
+        <span class="eyebrow">Google Play</span>
+        <h3>3 self-published Android games</h3>
+        <p>Designed, built and released on my own, from first prototype to store listing.</p>
+        <span class="go">See on Google Play →</span>
+      </a>
+      <a class="project" href="https://www.youtube.com/c/PaanchTanmatraStudio/videos" target="_blank" rel="noopener">
+        <span class="eyebrow">YouTube · Paanch Tanmatra Studio</span>
+        <h3>Unity tutorials and live playtests</h3>
+        <p>Game development videos, and live streams where I playtest Trijam game-jam entries.</p>
+        <span class="go">Watch on YouTube →</span>
+      </a>
+      <a class="project" href="https://github.com/thenerdpoint60" target="_blank" rel="noopener">
+        <span class="eyebrow">GitHub</span>
+        <h3>Open-source projects and tools</h3>
+        <p>Personal projects, prototypes and tools I've shared.</p>
+        <span class="go">Browse on GitHub →</span>
+      </a>
+    </div>
+    <div class="jam-list" aria-label="Some jam games">
+      <span class="chip dim">Wish Granted</span><span class="chip dim">Sign Here, Forever</span><span class="chip dim">Aimbot Mayhem!</span>
+      <span class="chip dim">Anti Tower Defense</span><span class="chip dim">Space Traffic Control</span><span class="chip dim">Spidermask</span>
+      <span class="chip dim">Alice The Giver</span><span class="chip dim">Stuck in the Cassette</span><span class="chip dim">Dark Reflection</span>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap two">
+    <div>
+      <span class="eyebrow">Education</span>
+      <h2 style="font-size:32px;margin:10px 0 24px">Computer science, then applications</h2>
+      <div class="edu">
+        <div><b>Master of Computer Applications (MCA)</b><span>Navinchandra Mehta Institute of Technology and Development · 2020 – 2022</span></div>
+        <div><b>Bachelor's in Computer Science</b><span>SK Somaiya Degree College · 2017 – 2020</span></div>
+      </div>
+    </div>
+    <div>
+      <span class="eyebrow">Away from the keyboard</span>
+      <h2 style="font-size:32px;margin:10px 0 24px">Football, chess and mountains</h2>
+      <ul class="interests">
+        <li>Midfielder for NAVFAR FC in the MDFA 3rd Division.</li>
+        <li>Competed in chess at national level.</li>
+        <li>Trekked Har Ki Dun (3,566 m), Kedarkantha (3,810 m) and Roopkund (5,029 m).</li>
+        <li>3D printing and open-source software.</li>
+        <li>Speaks English, Hindi, Gujarati and Kutchi.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <h2>Let's make something that plays well.</h2>
+      <p>I'm open to senior and lead roles in Unity, Unreal or Godot: onsite in India, remote, or abroad.</p>
+      <div class="ctas">
+        <button class="btn primary" type="button" id="copy-email">bhavypoladia5@gmail.com</button>
+        <a class="btn" href="resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+        <a class="btn" href="https://github.com/thenerdpoint60" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://nerdpoint.itch.io/" target="_blank" rel="noopener">itch.io</a>
+        <span class="copy-note" id="copy-note" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Bhavy Harshal Poladia</span>
+    <span>Built by hand, hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+  const email = "bhavypoladia5@gmail.com";
+  const note = document.getElementById("copy-note");
+  document.getElementById("copy-email").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      note.textContent = "Email copied";
+    } catch {
+      window.location.href = "mailto:" + email;
+    }
+    setTimeout(() => { note.textContent = ""; }, 2500);
+  });
+</script>
+</body>
+</html>
