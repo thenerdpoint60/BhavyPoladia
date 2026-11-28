@@ -4,10 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bhavy Poladia · Game Developer</title>
-<meta name="description" content="Bhavy Harshal Poladia, Lead Game Developer (Unity / C#). Gameplay, tools and console development. Currently leading SURI: The Seventh Note for PS5 and PC.">
+<meta name="description" content="Bhavy Harshal Poladia, Lead Game Developer (Unity / C#). Gameplay, tools and console development. Lead developer on SURI: The Seventh Note, out now on PS5 and PC.">
 <meta property="og:title" content="Bhavy Poladia · Lead Game Developer">
-<meta property="og:description" content="Unity / C# gameplay, tools and console development. Leading SURI: The Seventh Note for PS5 and PC.">
+<meta property="og:description" content="Unity / C# gameplay, tools and console development. Lead developer on SURI: The Seventh Note, out now on PS5 and PC.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://thenerdpoint60.github.io/BhavyPoladia/">
+<meta property="og:image" content="https://thenerdpoint60.github.io/BhavyPoladia/images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bhavy Harshal Poladia, Lead Game Developer, with SURI: The Seventh Note key art and a QR code to this portfolio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bhavy Poladia · Lead Game Developer">
+<meta name="twitter:image" content="https://thenerdpoint60.github.io/BhavyPoladia/images/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -127,6 +135,25 @@ section > .wrap > h2 { font-size: clamp(30px, 4vw, 44px); margin: 10px 0 32px; }
 .tag { font: 500 12px/1 var(--mono); padding: 7px 10px; border-radius: 999px; border: 1px solid currentColor; opacity: .85; }
 @media (max-width: 820px) { .feature { grid-template-columns: 1fr; padding: 28px; } }
 
+/* SURI media */
+.suri-media { display: grid; grid-template-columns: 1.7fr 1fr; gap: 14px; margin-top: 18px; }
+.video { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; background: #000; min-width: 0; }
+.video iframe, .video-play { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-play { padding: 0; background: none; cursor: pointer; }
+.video-play img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.video-play:hover img { transform: scale(1.03); }
+.play-badge { position: absolute; left: 16px; bottom: 16px; padding: 10px 16px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font: 600 14px/1 var(--body); }
+.shots { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 14px; min-width: 0; }
+.shot { padding: 0; border: 0; border-radius: var(--radius); overflow: hidden; background: var(--line); cursor: zoom-in; min-height: 0; }
+.shot img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.shot:hover img { transform: scale(1.06); }
+.suri-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+#lightbox { border: 0; padding: 0; background: transparent; max-width: min(96vw, 1200px); }
+#lightbox::backdrop { background: rgba(0, 0, 0, .82); }
+#lightbox img { display: block; max-width: 100%; max-height: 88vh; border-radius: 10px; cursor: zoom-out; }
+@media (max-width: 820px) { .suri-media { grid-template-columns: 1fr; } .shot { aspect-ratio: 16 / 9; } }
+@media (prefers-reduced-motion: reduce) { .video-play img, .shot img { transition: none; } }
+
 /* Game gallery */
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
 .game {
@@ -222,7 +249,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   <div>
     <span class="eyebrow">Lead Game Developer · Bangalore, India</span>
     <h1>Bhavy Harshal Poladia builds games that <em>feel right</em> on the beat.</h1>
-    <p class="lead">Unity and C# developer with 6+ years across gameplay, tools and console. Currently leading a rhythm platformer for PS5 and PC.</p>
+    <p class="lead">Unity and C# developer with 6+ years across gameplay, tools and console. Lead developer on SURI: The Seventh Note, out now on PS5 and PC.</p>
     <div class="ctas">
       <a class="btn primary" href="resume.pdf" target="_blank" rel="noopener">Download resume</a>
       <a class="btn" href="#contact">Get in touch</a>
@@ -242,7 +269,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 <div class="wrap">
   <div class="stats">
     <div class="stat"><b>6+</b><span>years in Unity / C#</span></div>
-    <div class="stat"><b>PS5</b><span>console title in development</span></div>
+    <div class="stat"><b>PS5 + PC</b><span>SURI released Oct 2026</span></div>
     <div class="stat"><b>15</b><span>game-jam games on itch.io</span></div>
     <div class="stat"><b>5</b><span>studios worked at</span></div>
   </div>
@@ -250,13 +277,13 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 
 <section id="suri">
   <div class="wrap">
-    <span class="eyebrow">What I'm working on now</span>
-    <h2>Leading SURI: The Seventh Note</h2>
+    <span class="eyebrow">Featured · released October 2026</span>
+    <h2>Lead developer on SURI: The Seventh Note</h2>
     <div class="feature">
       <div>
         <span class="eyebrow">Tathvamasi Studio · Oct 2024 – present</span>
         <h3>A nonlinear rhythm-based platformer</h3>
-        <p>SURI is being developed for PS5 and Windows as part of Sony's PlayStation India Hero Project. I lead its development and own the systems that make movement and music line up.</p>
+        <p>SURI launched on PS5 and Steam on 30 October 2026 as part of Sony's PlayStation India Hero Project. I lead its development and own the systems that make movement and music line up.</p>
         <div class="tags">
           <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">PS5</span><span class="tag">FMOD Studio</span><span class="tag">Editor tooling</span>
         </div>
@@ -269,6 +296,29 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
         <li>Technical point of contact across design, art and audio.</li>
       </ul>
     </div>
+
+    <div class="suri-media">
+      <div class="video" id="suri-video" data-id="LOg0r2yGG4s">
+        <button type="button" class="video-play" aria-label="Play the SURI gameplay trailer">
+          <img src="images/suri/trailer-poster.jpg" alt="SURI: The Seventh Note gameplay trailer" width="1280" height="720" loading="lazy">
+          <span class="play-badge" aria-hidden="true">&#9654; Gameplay trailer</span>
+        </button>
+      </div>
+      <div class="shots">
+        <button type="button" class="shot" data-full="images/suri/shot-1.jpg"><img src="images/suri/shot-1.jpg" alt="SURI screenshot: a shrine guarded by two statues" width="1200" height="675" loading="lazy"></button>
+        <button type="button" class="shot" data-full="images/suri/shot-2.jpg"><img src="images/suri/shot-2.jpg" alt="SURI screenshot: a waterfall level with floating platforms" width="1200" height="675" loading="lazy"></button>
+        <button type="button" class="shot" data-full="images/suri/shot-3.jpg"><img src="images/suri/shot-3.jpg" alt="SURI screenshot: a purple cavern with rhythm hazards" width="1200" height="675" loading="lazy"></button>
+        <button type="button" class="shot" data-full="images/suri/shot-4.jpg"><img src="images/suri/shot-4.jpg" alt="SURI screenshot: a platforming section under a large bell" width="1200" height="675" loading="lazy"></button>
+      </div>
+    </div>
+    <div class="suri-links">
+      <a class="btn primary" href="https://store.steampowered.com/app/4110680/SURI_The_Seventh_Note/" target="_blank" rel="noopener">Steam</a>
+      <a class="btn" href="https://store.playstation.com/en-in/concept/10010699" target="_blank" rel="noopener">PlayStation Store</a>
+      <a class="btn" href="https://www.surithegame.com" target="_blank" rel="noopener">Official site</a>
+      <a class="btn" href="https://www.youtube.com/watch?v=LOg0r2yGG4s" target="_blank" rel="noopener">Trailer on YouTube</a>
+      <a class="btn" href="https://www.youtube.com/watch?v=pfkxBtqqxIc" target="_blank" rel="noopener">Release date trailer</a>
+    </div>
+    <dialog id="lightbox" aria-label="Screenshot"><img alt=""></dialog>
   </div>
 </section>
 
@@ -357,7 +407,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
           <h3>Lead Game Developer</h3>
           <div class="org">Tathvamasi Studio</div>
           <ul>
-            <li>Leading SURI: The Seventh Note for PS5 and Windows (PlayStation India Hero Project).</li>
+            <li>Lead on SURI: The Seventh Note, released on PS5 and Steam in October 2026 (PlayStation India Hero Project).</li>
             <li>Gameplay systems, FMOD integration, and editor tools for the whole team.</li>
           </ul>
         </div>
@@ -520,6 +570,24 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </footer>
 
 <script>
+  // SURI trailer: load the YouTube player only when asked
+  const video = document.getElementById("suri-video");
+  video.querySelector(".video-play").addEventListener("click", () => {
+    const f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/" + video.dataset.id + "?autoplay=1&rel=0";
+    f.title = "SURI: The Seventh Note gameplay trailer";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.allowFullscreen = true;
+    video.replaceChildren(f);
+  });
+  // SURI screenshots: click to enlarge
+  const box = document.getElementById("lightbox");
+  document.querySelectorAll(".shot").forEach((b) => b.addEventListener("click", () => {
+    box.querySelector("img").src = b.dataset.full;
+    box.querySelector("img").alt = b.querySelector("img").alt;
+    box.showModal();
+  }));
+  box.addEventListener("click", () => box.close());
   document.getElementById("year").textContent = new Date().getFullYear();
   const email = "bhavypoladia5@gmail.com";
   const note = document.getElementById("copy-note");
