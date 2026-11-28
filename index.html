@@ -177,6 +177,7 @@ section > .wrap > h2 { font-size: clamp(30px, 4vw, 44px); margin: 10px 0 32px; }
 .project h3 { font-size: 24px; margin: 10px 0 8px; }
 .project p { color: var(--muted); margin: 0; }
 .project .go { display: inline-block; margin-top: 14px; font: 600 14px/1 var(--mono); color: var(--accent); }
+.project.static:hover { border-color: var(--line); transform: none; }
 .jam-list { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px; }
 @media (max-width: 720px) { .projects { grid-template-columns: 1fr; } }
 
@@ -450,12 +451,11 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
         <p>Strategy, puzzle, platformer and horror games built in jam weekends, most playable in the browser.</p>
         <span class="go">Play on itch.io →</span>
       </a>
-      <a class="project" href="https://play.google.com/store/apps/dev?id=6326533619120762311" target="_blank" rel="noopener">
+      <div class="project static">
         <span class="eyebrow">Google Play</span>
         <h3>3 self-published Android games</h3>
         <p>Designed, built and released on my own, from first prototype to store listing.</p>
-        <span class="go">See on Google Play →</span>
-      </a>
+      </div>
       <a class="project" href="https://www.youtube.com/c/PaanchTanmatraStudio/videos" target="_blank" rel="noopener">
         <span class="eyebrow">YouTube · Paanch Tanmatra Studio</span>
         <h3>Unity tutorials and live playtests</h3>
